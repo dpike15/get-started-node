@@ -5,7 +5,7 @@ node {
         checkout scm
     }
     
-    stage(''){
+    stage('Set PATH env'){
         sh """
            export PATH=$PATH:/usr/local/bin/docker
         """
