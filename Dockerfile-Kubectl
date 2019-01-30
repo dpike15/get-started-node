@@ -1,0 +1,21 @@
+FROM alpine:3.5
+
+RUN apk --no-cache add curl python
+
+RUN curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o /tmp/awscli-bundle.zip && \
+unzip /tmp/awscli-bundle.zip && \
+./awscli-bundle/install -i /usr/share/awscli -b /usr/local/bin/aws && \
+rm -rf /tmp/awscli-bundle.zip ./awscli-bundle
+
+RUN curl "https://releases.hashicorp.com/terraform/0.11.11/terraform_0.11.11_linux_amd64.zip" -o /tmp/terraform.zip && \
+unzip /tmp/terraform.zip -d /usr/local/bin/
+
+RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+
+RUN chmod u+x /usr/local/bin/terraform
+RUN chmod u+x /usr/local/bin/aws
+RUN mv ./kubectl /usr/local/bin/kubectl && chmod u+x /usr/local/bin/kubectl
+
+COPY /Users/derekpike/.bluemix/plugins/container-service/clusters/Dereks_Playhouse/kube-config-hou02-Dereks_Playhouse.yml /tmp/kube-config-hou02-Dereks_Playhouse.yml
+
+WORKDIR /tf
