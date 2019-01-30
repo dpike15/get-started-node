@@ -4,6 +4,12 @@ node {
     stage('Clone repository') {
         checkout scm
     }
+    
+    stage(''){
+        sh """
+           export PATH=$PATH:/usr/local/bin/docker
+        """
+    }    
 
     stage('Build image') {
         app = docker.build("${MYNAMESPACE}/myapp")
