@@ -24,7 +24,6 @@ node {
     }
     stage('Deploy') {
         sh """
-        export KUBECONFIG=/Users/derekpike/.bluemix/plugins/container-service/clusters/Dereks_Playhouse/kube-config-hou02-Dereks_Playhouse.yml
         cat "kubernetes/deployment.yaml" | sed "s/<REGISTRY>/${MYREGISTRY}/g" | sed "s/<NAMESPACE>/${MYNAMESPACE}/g" | kubectl apply -n default -f  -
             """
     }
