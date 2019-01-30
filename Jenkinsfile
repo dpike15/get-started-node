@@ -24,7 +24,7 @@ node {
     }
     stage('Deploy') {
         sh """
-        echo $PATH
+        export KUBECONFIG=/tmp/kube-config-hou02-Dereks_Playhouse.yml
         cat "kubernetes/deployment.yaml" | sed "s/<REGISTRY>/${MYREGISTRY}/g" | sed "s/<NAMESPACE>/${MYNAMESPACE}/g" | kubectl apply -n default -f  -
             """
     }
